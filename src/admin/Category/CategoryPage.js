@@ -1,9 +1,11 @@
 import {useCallback, useEffect, useState} from "react";
-import {Button, message, Popconfirm, Table} from "antd";
+import {Button, message, Popconfirm, Space, Table} from "antd";
+import {useNavigate} from "react-router-dom";
 
 const CategoryPage = () => {
     const [dataSource, setDataSource] = useState([]);
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     const columns = [
         {
@@ -36,17 +38,23 @@ const CategoryPage = () => {
             dataIndex: "actions",
             key: "actions",
             render: (_, record) => (
-                <Popconfirm
-                    title="Kategoriyi sil"
-                    description="Kategoriyi silmek istediğinizden emin misiniz?"
-                    okText="Evet"
-                    cancelText="Hayır"
-                    onConfirm={() => deleteCategory(record.id)}
-                    >
-                    <Button type="primary" danger>
-                        Sil
+                 <Space>
+                     {/*divle yazarsak boşluk olmaz butonlar arasında*/}
+                    <Button type="primary" onClick={() => navigate(`/admin/categories/update/${record.id}`)}>
+                        Düzenle
                     </Button>
-                </Popconfirm>
+                    <Popconfirm
+                        title="Kategoriyi sil"
+                        description="Kategoriyi silmek istediğinizden emin misiniz?"
+                        okText="Evet"
+                        cancelText="Hayır"
+                        onConfirm={() => deleteCategory(record.id)}
+                    >
+                        <Button type="primary" danger>
+                            Sil
+                        </Button>
+                    </Popconfirm>
+                </Space>
             )
         },
     ];
@@ -54,13 +62,13 @@ const CategoryPage = () => {
     const fetchCategories = useCallback(async () => {
         setLoading(true);
 
-        try{
+        try {
             const response = await fetch(`http://localhost:8080/api/category/categories`)
 
             if (response.ok) {
                 const data = await response.json();
                 setDataSource(data);
-            }else {
+            } else {
                 message.error("Kategoriler başarıyla getirildi.");
             }
         } catch (error) {
@@ -68,11 +76,12 @@ const CategoryPage = () => {
         } finally {
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, ['http://localhost:8080']);
 
     const deleteCategory = async (id) => {
         try {
-            const response =await fetch(`http://localhost:8080/api/category/deleteCategory/${id}`, {
+            const response = await fetch(`http://localhost:8080/api/category/deleteCategory/${id}`, {
                 method: "DELETE",
             });
 
@@ -97,7 +106,7 @@ const CategoryPage = () => {
             columns={columns}
             rowKey={(record) => record.id}
             loading={loading}
-            />
+        />
     );
 };
 
