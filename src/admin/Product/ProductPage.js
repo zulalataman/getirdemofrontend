@@ -2,7 +2,7 @@ import {useCallback, useEffect, useState} from "react";
 import {Button, message, Popconfirm, Space, Table} from "antd";
 import {useNavigate} from "react-router-dom";
 
-const CategoryPage = () => {
+const ProductPage = () => {
     const [dataSource, setDataSource] = useState([]);
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
@@ -24,19 +24,20 @@ const CategoryPage = () => {
             key: "description",
         },
         {
-            title: "Resim",
-            dataIndex: "imagePath",
-            key: "imagePath",
-            render: (imgSrc) => (
-                <img
-                    src={imgSrc}
-                    alt="Resim"
-                    style={{
-                        width: "70px",
-                        height: "70px",
-                    }}
-                />
-            ),
+            title: "Fiyat",
+            dataIndex: "price",
+            key: "price",
+        },
+        {
+            title: "Stok",
+            dataIndex: "stock",
+            key: "stock",
+        },
+        {
+            title: "Kategori",
+            dataIndex: "category",
+            key: "category",
+            render: (category) => category.name,
         },
         {
             title: "Actions",
@@ -45,15 +46,15 @@ const CategoryPage = () => {
             render: (_, record) => (
                 <Space>
                     {/*divle yazarsak boşluk olmaz butonlar arasında*/}
-                    <Button type="primary" onClick={() => navigate(`/admin/categories/update/${record.id}`)}>
+                    <Button type="primary" onClick={() => navigate(`/admin/products/update/${record.id}`)}>
                         Düzenle
                     </Button>
                     <Popconfirm
-                        title="Kategoriyi sil"
-                        description="Kategoriyi silmek istediğinizden emin misiniz?"
+                        title="Ürünü sil"
+                        description="Ürünü silmek istediğinizden emin misiniz?"
                         okText="Evet"
                         cancelText="Hayır"
-                        onConfirm={() => deleteCategory(record.id)}
+                        onConfirm={() => deleteProduct(record.id)}
                     >
                         <Button type="primary" danger>
                             Sil
@@ -64,35 +65,35 @@ const CategoryPage = () => {
         },
     ];
 
-    const fetchCategories = useCallback(async () => {
+    const fetchProducts = useCallback(async () => {
         setLoading(true);
 
         try {
-            const response = await fetch(`http://localhost:8080/api/category/categories`)
+            const response = await fetch(`http://localhost:8080/api/product/products`)
 
             if (response.ok) {
                 const data = await response.json();
                 setDataSource(data);
             } else {
-                message.error("Kategoriler başarıyla getirildi.");
+                message.error("Ürünler başarıyla getirildi.");
             }
         } catch (error) {
-            console.log("Kategori getirme işlemi başarısız:", error);
+            console.log("Ürün getirme işlemi başarısız:", error);
         } finally {
             setLoading(false);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, ['http://localhost:8080']);
 
-    const deleteCategory = async (id) => {
+    const deleteProduct = async (id) => {
         try {
-            const response = await fetch(`http://localhost:8080/api/category/deleteCategory/${id}`, {
+            const response = await fetch(`http://localhost:8080/api/product/deleteProduct/${id}`, {
                 method: "DELETE",
             });
 
             if (response.ok) {
-                message.success("Kategori başarıyla silindi.");
-                fetchCategories();
+                message.success("Ürün başarıyla silindi.");
+                fetchProducts();
             } else {
                 message.error("Silme işlemi başarısız.")
             }
@@ -102,12 +103,12 @@ const CategoryPage = () => {
     }
 
     useEffect(() => {
-        fetchCategories();
-    }, [fetchCategories]);
+        fetchProducts();
+    }, [fetchProducts]);
 
     return (
         <Table
-            dataSource={dataSource} M
+            dataSource={dataSource}
             columns={columns}
             rowKey={(record) => record.id}
             loading={loading}
@@ -115,4 +116,4 @@ const CategoryPage = () => {
     );
 };
 
-export default CategoryPage
+export default ProductPage
