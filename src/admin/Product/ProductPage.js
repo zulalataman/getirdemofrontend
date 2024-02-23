@@ -40,6 +40,21 @@ const ProductPage = () => {
             render: (category) => category.name,
         },
         {
+            title: "Resim",
+            dataIndex: "img",
+            key: "img",
+            render: (imgSrc) => (
+                <img
+                    src={imgSrc}
+                    alt="Resim"
+                    style={{
+                        width: "70px",
+                        height: "70px",
+                    }}
+                />
+            ),
+        },
+        {
             title: "Actions",
             dataIndex: "actions",
             key: "actions",
