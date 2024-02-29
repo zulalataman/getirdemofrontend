@@ -59,9 +59,8 @@ const ProductDetail = () => {
                 <div> {/* Resmin olduğu kısım */}
                     <img src={product.img} alt={product.name}
                          style={{
-                             width: '100%',
-                             height: 'auto',
-                             maxWidth: '400px',
+                             width: '400px',
+                             height: '400px',
                              border: '2px solid whitesmoke',
                              borderRadius: '10px'
                          }}/>
@@ -75,7 +74,7 @@ const ProductDetail = () => {
                     }}>{product.name}</p>
                     <p style={{color: "midnightblue", fontSize: 25, fontWeight: 500}}>₺ {product.price} </p>
                     <Button className="custom-button" size="large">Sepete Ekle</Button>
-                    <Card title="Detaylar" bordered={false} style={{width: 800, height: 100, marginTop: 20}}>
+                    <Card title="Detaylar" bordered={false} style={{width: 700, height: 100, marginTop: 20}}>
                         <p style={{marginTop: -15, marginBottom: 15}}>{product.description}</p>
                     </Card>
                 </div>

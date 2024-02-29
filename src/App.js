@@ -24,7 +24,7 @@ function App() {
             <Route path="/admin/products/create" element={<CreateProductPage/>}/>
             <Route path="/category/menu" element={<CategoryMenu/>}/>
             <Route path="/product/:id"
-                   element={<ProductDetail/>}/> {/* productId parametresini alacak şekilde düzenleyin */}
+                   element={<ProductDetail/>}/>
             <Route path="/register" element={<RegisterLogin/>}/>
         </Routes>
     );

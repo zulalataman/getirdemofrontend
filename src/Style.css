@@ -1,7 +1,7 @@
 .custom-button {
-    background-color: midnightblue; /* Turuncu renk */
+    background-color: midnightblue;
     border-color: midnightblue;
-    color: white; /* Beyaz renkli metin */
+    color: white;
     width: 180px;
     height: 50px;
 }

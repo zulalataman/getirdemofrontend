@@ -1,6 +1,5 @@
 import {Button, Popconfirm, Table, message} from "antd";
 import {useCallback, useEffect, useState} from "react";
-import {format} from "date-fns";
 
 const UserPage = () => {
     const [dataSource, setDataSource] = useState([]);
@@ -31,12 +30,6 @@ const UserPage = () => {
             title: "Adres",
             dataIndex: "address",
             key: "address",
-        },
-        {
-            title: "Doğum Günü",
-            dataIndex: "dateBirth",
-            key: "dateBirth",
-            render: (date) => format(new Date(date), "dd-MM-yyyy"),
         },
         {
             title: "Actions",
