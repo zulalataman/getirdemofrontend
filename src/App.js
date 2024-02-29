@@ -1,4 +1,4 @@
-import './App.css';
+import React from 'react';
 import {Route, Routes} from "react-router-dom";
 import UserPage from "./admin/UserPage";
 import CategoryPage from "./admin/Category/CategoryPage";
@@ -7,6 +7,10 @@ import CreateCategoryPage from "./admin/Category/CreateCategoryPage";
 import ProductPage from "./admin/Product/ProductPage";
 import UpdateProductPage from "./admin/Product/UpdateProductPage";
 import CreateProductPage from "./admin/Product/CreateProductPage";
+import ProductDetail from "./compenent/ProductDetail";
+import CategoryMenu from "./compenent/CategoryMenu";
+import RegisterLogin from "./compenent/RegisterLogin";
+
 
 function App() {
     return (
@@ -18,6 +22,10 @@ function App() {
             <Route path="/admin/products" element={<ProductPage/>}/>
             <Route path="/admin/products/update/:id" element={<UpdateProductPage/>}/>
             <Route path="/admin/products/create" element={<CreateProductPage/>}/>
+            <Route path="/category/menu" element={<CategoryMenu/>}/>
+            <Route path="/product/:id"
+                   element={<ProductDetail/>}/> {/* productId parametresini alacak şekilde düzenleyin */}
+            <Route path="/register" element={<RegisterLogin/>}/>
         </Routes>
     );
 }

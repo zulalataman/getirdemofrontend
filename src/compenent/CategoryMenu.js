@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from "prop-types";
-import { Layout, Menu, theme } from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Layout, Menu, theme} from 'antd';
+import ProductContent from './ProductContent';
 
-const { Sider } = Layout;
+const {Content, Sider} = Layout;
 
-const CategoryMenu = ({ onCategoryClick }) => {
+const CategoryMenu = () => {
     const [categories, setCategories] = useState([]);
+    const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
     useEffect(() => {
         fetch('http://localhost:8080/api/category/categories')
@@ -19,38 +20,60 @@ const CategoryMenu = ({ onCategoryClick }) => {
     }, []);
 
     const handleCategoryClick = (categoryId) => {
-        onCategoryClick(categoryId);
+        setSelectedCategoryId(categoryId);
     }
 
-    const items = categories.map((category, index) => ({
+    const items2 = categories.map((category, index) => ({
         key: `sub${index + 1}`,
-        icon: <img src={category.imagePath} alt={category.name} style={{ width: '24px', height: '24px' }} />,
+        icon: <img src={category.imagePath} alt={category.name} style={{width: '24px', height: '24px'}}/>,
         label: category.name,
         onClick: () => handleCategoryClick(category.id),
+        style: {color: 'midnightblue'}
     }));
 
+    const {
+        token: {colorBgContainer, borderRadiusLG},
+    } = theme.useToken();
+
     return (
-        <Sider
-            style={{
-                background: theme.useToken().token.colorBgContainer,
-            }}
-            width={200}
-        >
-            <Menu
-                mode="inline"
-                defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
+        <Layout>
+            <Content
                 style={{
-                    height: '100%',
+                    padding: '0 48px',
                 }}
-                items={items}
-            />
-        </Sider>
+            >
+                <br/>
+                <br/>
+                <Layout
+                    style={{
+                        padding: '24px 0',
+                        background: colorBgContainer,
+                        borderRadius: borderRadiusLG,
+                    }}
+                >
+                    <Sider
+                        style={{
+                            background: colorBgContainer,
+                        }}
+                        width={200}
+                    >
+                        <Menu
+                            mode="inline"
+                            defaultSelectedKeys={['1']}
+                            defaultOpenKeys={['sub1']}
+                            style={{
+                                height: '100%',
+                            }}
+                            items={items2}
+                        />
+                    </Sider>
+                    <Content>
+                        {/* ProductContent bileşeninin çağrılması */}
+                        <ProductContent categoryId={selectedCategoryId}/>
+                    </Content>
+                </Layout>
+            </Content>
+        </Layout>
     );
 };
-
-CategoryMenu.propTypes = {
-    onCategoryClick: PropTypes.func.isRequired,
-};
-
 export default CategoryMenu;

@@ -93,8 +93,10 @@ const AdminLayout = ({children}) => {
             key: "10",
             icon: <RollbackOutlined/>,
             label: "Ana Sayfaya Git",
+            path: "/category/menu",
             onClick: () => {
-                navigate(`/`);
+                navigate(`/category/menu`);
+                window.location.reload();
             },
         },
     ];

@@ -1,43 +1,22 @@
-import React, { useState } from 'react';
-import { Layout, theme } from 'antd';
+import React from 'react';
+import {Layout} from 'antd';
 import Header from "../compenent/layout/Header";
-import PageFooter from "../compenent/layout/Footer";
-import CategoryMenu from "../compenent/CategoryMenu";
-import ProductContent from "../compenent/ProductContent";
+import Footer from "../compenent/layout/Footer";
+import * as Proptypes from "prop-types";
 
-const { Content } = Layout;
-
-const MainLayout = () => {
-    const [selectedCategoryId, setSelectedCategoryId] = useState(null);
-
-    const handleCategoryClick = (categoryId) => {
-        setSelectedCategoryId(categoryId);
-    }
-
+const MainLayout = ({children}) => {
     return (
-        <Layout>
-            <Header />
-            <Content
-                style={{
-                    padding: '0 48px',
-                }}
-            >
-                <br />
-                <br />
-                <Layout
-                    style={{
-                        padding: '24px 0',
-                        background: theme.useToken().token.colorBgContainer,
-                        borderRadius: theme.useToken().token.borderRadiusLG,
-                    }}
-                >
-                    <CategoryMenu onCategoryClick={handleCategoryClick} />
-                    <ProductContent categoryId={selectedCategoryId} />
-                </Layout>
-            </Content>
-            <PageFooter />
-        </Layout>
+        <div className="main-layout">
+            <Layout>
+                <Header/>
+                {children}
+                <Footer/>
+            </Layout>
+        </div>
     );
 };
-
 export default MainLayout;
+
+MainLayout.propTypes = {
+    children: Proptypes.node,
+};

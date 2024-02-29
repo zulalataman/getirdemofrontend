@@ -1,6 +1,6 @@
-import { Button, Popconfirm, Table, message } from "antd";
-import { useCallback, useEffect, useState } from "react";
-import { format } from "date-fns";
+import {Button, Popconfirm, Table, message} from "antd";
+import {useCallback, useEffect, useState} from "react";
+import {format} from "date-fns";
 
 const UserPage = () => {
     const [dataSource, setDataSource] = useState([]);
@@ -76,6 +76,7 @@ const UserPage = () => {
         } finally {
             setLoading(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, ['http://localhost:8080']);
 
     const deleteUser = async (mail) => {

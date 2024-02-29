@@ -1,4 +1,4 @@
-import { isAdmin } from "../config/isAdmin";
+import {isAdmin} from "../config/isAdmin";
 import AdminLayout from "./AdminLayout";
 import MainLayout from "./MainLayout";
 

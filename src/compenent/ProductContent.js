@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from "prop-types";
+import React, {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
 
-const ProductContent = ({ categoryId }) => {
+const ProductContent = ({categoryId}) => {
     const [products, setProducts] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (categoryId !== null) {
@@ -21,8 +22,13 @@ const ProductContent = ({ categoryId }) => {
         }
     }, [categoryId]);
 
+    // Ürüne tıklama işlemi
+    const handleProductClick = (productId) => {
+        navigate(`/product/${productId}`); // Ürün ID'sine göre URL oluştur ve yönlendir
+    };
+
     return (
-        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+        <div style={{display: 'flex', flexWrap: 'wrap'}}>
             {products.map(product => (
                 <div key={product.id} style={{
                     width: '200px',
@@ -30,11 +36,12 @@ const ProductContent = ({ categoryId }) => {
                     border: '1px solid #f0ffff',
                     padding: '10px',
                     borderRadius: '5px',
-                    textAlign: 'center'
-                }}>
+                    textAlign: 'center',
+                    cursor: 'pointer' // Cursor'u değiştir, tıklanabilir hale getir
+                }} onClick={() => handleProductClick(product.id)}>
                     <img src={product.img} alt={product.name}
-                         style={{ width: '100px', height: '100px', objectFit: 'cover', marginBottom: '10px' }} />
-                    <p style={{ color: 'lightslategrey', fontSize: '20px', marginBottom: '5px' }}>{product.price} ₺</p>
+                         style={{width: '100px', height: '100px', objectFit: 'cover', marginBottom: '10px'}}/>
+                    <p style={{color: 'lightslategrey', fontSize: '20px', marginBottom: '5px'}}>{product.price} ₺</p>
                     <h3 style={{
                         color: 'midnightblue',
                         marginTop: '1px',
@@ -50,10 +57,6 @@ const ProductContent = ({ categoryId }) => {
             ))}
         </div>
     );
-};
-
-ProductContent.propTypes = {
-    categoryId: PropTypes.number,
 };
 
 export default ProductContent;
